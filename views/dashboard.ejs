@@ -1,0 +1,58 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title><%= title %></title>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcqkYs7ZQXp-YVPpOMB58L4duj90JOJec&callback=initMap" async defer></script>  
+    <script>  
+        function initMap() {  
+            console.log("Initializing map...");  
+            const parkingLots = <%- JSON.stringify(parkingLots) %>;  
+            if (parkingLots.length > 0) {  
+                const map = new google.maps.Map(document.getElementById("map"), {  
+                    zoom: 12,  
+                    center: { lat: parkingLots[0].latitude, lng: parkingLots[0].longitude },    
+                });  
+
+                parkingLots.forEach(lot => {  
+                    new google.maps.Marker({  
+                        position: { lat: lot.latitude, lng: lot.longitude },  
+                        map: map,  
+                        title: lot.name,  
+                    });  
+                });  
+            } else {  
+                console.error("No parking lots available");  
+            }  
+        }  
+    </script>  
+</head>  
+<body onload="initMap()">  
+    <h1>Parking Dashboard</h1>  
+    <h2>Available Parking Lots</h2>  
+    <div id="map" style="height: 400px; width: 100%;"></div>  
+    <ul>  
+        <% parkingLots.forEach(lot => { %>  
+            <li>  
+                <strong><%= lot.name %></strong> - <%= lot.availableSpots %> spots available  
+                <form action="/book" method="POST">  
+                    <input type="hidden" name="parkingLotId" value="<%= lot.id %>">  
+                    <input type="hidden" name="vehicleId" value="1"> <!-- Static for now, could be dynamic -->  
+    
+                    <!-- Assuming userId is known and passed from the session or another source -->  
+                    <input type="hidden" name="userId" value="<%= userId %>"> <!-- Assuming userId is defined in your context -->  
+    
+                    <!-- Input fields for start and end time -->  
+                    <label for="startTime">Start Time:</label>  
+                    <input type="datetime-local" id="startTime" name="startTime" required>  
+    
+                    <label for="endTime">End Time:</label>  
+                    <input type="datetime-local" id="endTime" name="endTime" required>  
+    
+                    <button type="submit">Book</button>  
+                </form>  
+            </li>  
+        <% }); %>  
+    </ul>
+</body>  
+</html>

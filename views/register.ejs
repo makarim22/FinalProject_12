@@ -1,0 +1,49 @@
+<!DOCTYPE html>  
+<html lang="en">  
+
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Register</title>  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">  
+    <style>  
+        body {  
+            background-color: #f8f9fa; /* Light gray background */  
+        }  
+
+        .form-container {  
+            background-color: white; /* White background for the form */  
+            padding: 20px; /* Padding around the form */  
+            border-radius: 10px; /* Rounded corners */  
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */  
+        }  
+    </style>  
+</head>  
+
+<body class="d-flex justify-content-center align-items-center vh-100">  
+    <div class="form-container col-md-4">  
+        <h1 class="text-center mb-4">Register</h1>  
+        <form action="/register" method="POST">  
+            <div class="mb-3">  
+                <label for="username" class="form-label">Username</label>  
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>  
+            </div>  
+            <div class="mb-3">  
+                <label for="email" class="form-label">Email address</label>  
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>  
+            </div>  
+            <div class="mb-3">  
+                <label for="password" class="form-label">Password</label>  
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>  
+            </div>  
+            <button type="submit" class="btn btn-primary w-100">Register</button>  
+        </form>  
+    </div>  
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>  
+</body>  
+
+</html>
+
