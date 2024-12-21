@@ -1,6 +1,6 @@
 const ParkingLot = require('../models/ParkingLot'); // Import your ParkingLot model  
 const Reservation = require('../models/Reservation');
-
+const User = require('../models/User');
 // exports.dashboard = async (req, res) => {  
 //     try {  
 //         // Fetch parking lots from the database  
@@ -16,7 +16,8 @@ const Reservation = require('../models/Reservation');
 
 exports.dashboard = async (req, res) => {  
     try {  
-        const userId = req.session.userId; // Get the user ID from the session  
+        const userId = req.session.userId;
+        const name = req.session.username // Get the user ID from the session  
         if (!userId) {  
             return res.redirect('/login'); // Redirect to login if no user is found  
         }  
@@ -28,7 +29,8 @@ exports.dashboard = async (req, res) => {
         res.render('dashboard', {   
             title: 'Parking Dashboard',   
             parkingLots,   
-            userId // Pass the userId to the dashboard   
+            userId, // Pass the userId to the dashboard   
+            name
         });  
     } catch (error) {  
         console.error('Error fetching parking lots:', error);  

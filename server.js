@@ -29,11 +29,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());  
 app.use(express.json());  
 app.use(cors());  
-app.use(session({  
-    secret: 'G7$k9@zP2#qW8!fR3^mN6&vT1*eY5$hJ',  
-    resave: false,  
-    saveUninitialized: true,  
-}));  
+// app.use(session({  
+//     secret: 'G7$k9@zP2#qW8!fR3^mN6&vT1*eY5$hJ',  
+//     resave: false,  
+//     saveUninitialized: true,  
+// }));  
 app.set('view engine', 'ejs');  
 app.set('views', './views');  
 
