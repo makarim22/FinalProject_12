@@ -17,24 +17,8 @@ router.get('/login', (req, res) => {
 });  
 
 router.post('/login', authController.login);  
-
-// Dashboard route  
-// router.get('/dashboard', authenticateJWT, parkingController.dashboard);  
-// // router.get('/dashboard', parkingController.dashboard); 
-// router.post('/book', authenticateJWT, parkingController.bookParking);  
+// logout
+router.post('/logout', authController.logout); // Use POST for logout for better security  
 
 module.exports = router;
 
-///
-// const express = require('express');  
-// const router = express.Router();  
-// const parkingController = require('../controllers/parkingController'); // Keep this import  
-
-// // // Dashboard route (no authentication required)  
-// // router.get('/dashboard', parkingController.dashboard); // Load dashboard without authentication  
-
-// // You can add other routes here as needed, such as booking parking  
-// // router.post('/book', parkingController.bookParking); // Assuming this is still needed  
-
-// module.exports = router;
-// ///

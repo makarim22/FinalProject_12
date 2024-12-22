@@ -2,12 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');  
 const session = require('express-session');  
 const sequelize = require('./config/database');  
+
 /// define routes
 const authRoutes = require('./routes/authRoutes');  
 const parkingRoutes = require('./routes/parkingRoutes');  
-const paymentRoutes = require('./routes/paymentRoutes');  
+const bookingRoutes = require('./routes/bookingRoutes');
+const profileRoutes = require('./routes/profileRoutes'); 
 const homeRoutes = require('./routes/homeRoutes');  
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const ticketRoutes = require('./routes/ticketRoutes'); //
 const cors = require('cors');  
 require('dotenv').config();  
 
@@ -29,25 +32,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());  
 app.use(express.json());  
 app.use(cors());  
-// app.use(session({  
-//     secret: 'G7$k9@zP2#qW8!fR3^mN6&vT1*eY5$hJ',  
-//     resave: false,  
-//     saveUninitialized: true,  
-// }));  
+
 app.set('view engine', 'ejs');  
 app.set('views', './views');  
 
-// // Landing Page Route  
-// app.get('/', (req, res) => {  
-//     res.render('index'); // Render the landing page  
-// });  
 
 // Routes  
 app.use('/', homeRoutes);  
 app.use('/', authRoutes); // Add the authentication routes  
 app.use('/', dashboardRoutes); // Add dashboard routes here   
 app.use('/', parkingRoutes);  
-app.use('/payment', paymentRoutes);  
+app.use('/', bookingRoutes); 
+app.use('/', profileRoutes);
+app.use('/', ticketRoutes);  // Add the profile routes here 
+
 
 // Start the server  
 app.listen(PORT, async () => {  

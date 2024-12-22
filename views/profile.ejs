@@ -21,6 +21,8 @@
 <body>  
     <div class="container my-5">  
         <h1 class="text-center mb-4">User Profile</h1>  
+        
+        <!-- Profile Information Card -->  
         <div class="card">  
             <div class="card-body">  
                 <h5 class="card-title">Profile Information</h5>  
@@ -30,44 +32,12 @@
             </div>  
         </div>  
 
-        <div class="card">  
-            <div class="card-body">  
-                <h5 class="card-title">Booking History</h5>  
-                <table class="table table-striped">  
-                    <thead>  
-                        <tr>  
-                            <th>Parking Lot</th>  
-                            <th>Date</th>  
-                            <th>Start Time</th>  
-                            <th>End Time</th>  
-                            <th>Cost (Coins)</th>  
-                        </tr>  
-                    </thead>  
-                    <tbody>  
-                        <% if (bookings.length > 0) { %>  
-                            <% bookings.forEach(booking => { %>  
-                                <tr>  
-                                    <td><%= booking.parkingLotName %></td>  
-                                    <td><%= booking.date %></td>  
-                                    <td><%= booking.startTime %></td>  
-                                    <td><%= booking.endTime %></td>  
-                                    <td><%= booking.cost %></td>  
-                                </tr>  
-                            <% }); %>  
-                        <% } else { %>  
-                            <tr>  
-                                <td colspan="5" class="text-center">No bookings found.</td>  
-                            </tr>  
-                        <% } %>  
-                    </tbody>  
-                </table>  
-            </div>  
-        </div>  
-
+        
         <div class="text-center">  
-            <a href="/logout" class="btn btn-danger">Logout</a>  
-        </div>  
-    </div>  
+            <form action="/logout" method="POST" style="display:inline;">  
+                <button type="submit" class="btn btn-danger">Logout</button>  
+            </form>  
+        </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>  
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>  

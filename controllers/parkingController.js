@@ -1,18 +1,5 @@
 const ParkingLot = require('../models/ParkingLot'); // Import your ParkingLot model  
-const Reservation = require('../models/Reservation');
 const User = require('../models/User');
-// exports.dashboard = async (req, res) => {  
-//     try {  
-//         // Fetch parking lots from the database  
-//         const parkingLots = await ParkingLot.findAll(); // Adjust this based on your ORM/DB setup  
-
-//         // Render the dashboard view and pass the parkingLots data  
-//         res.render('dashboard', { title: 'Parking Dashboard', parkingLots });  
-//     } catch (error) {  
-//         console.error('Error fetching parking lots:', error);  
-//         res.render('dashboard', { title: 'Parking Dashboard', parkingLots: [] }); // Pass an empty array on error  
-//     }  
-// };  
 
 exports.dashboard = async (req, res) => {  
     try {  
@@ -37,19 +24,6 @@ exports.dashboard = async (req, res) => {
         res.render('dashboard', { title: 'Parking Dashboard', parkingLots: [], userId: null }); // Pass an empty array on error  
     }  
 };
-
-// exports.bookParking = (req, res) => {  
-//     // Logic for booking parking  
-//     try {
-//         const Reservation =  Reservation.create(req, body);
-//         res.render('payment', {Reservation});
-//      }
-//     catch (error) {}
-    
-//     // res.send('Parking booked successfully!'); // Placeholder response  
-// };
-
-
 
 exports.bookParking = async (req, res) => {  
     try {  

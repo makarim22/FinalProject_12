@@ -20,8 +20,10 @@
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
+    "jsqr": "^1.0.0",
     "nodemon": "^3.1.9",
     "pg": "^8.13.1",
+    "qr-creator": "^1.0.0",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {

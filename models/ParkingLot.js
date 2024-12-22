@@ -3,6 +3,7 @@ const sequelize = require('../config/database');
 
 class ParkingLot extends Model {}  
 
+// Initialize the ParkingLot model with the updated attributes  
 ParkingLot.init({  
     name: {  
         type: DataTypes.STRING,  
@@ -10,14 +11,6 @@ ParkingLot.init({
     },  
     address: {  
         type: DataTypes.STRING,  
-        allowNull: false,  
-    },  
-    totalSpots: {  
-        type: DataTypes.INTEGER,  
-        allowNull: false,  
-    },  
-    availableSpots: {  
-        type: DataTypes.INTEGER,  
         allowNull: false,  
     },  
     latitude: {  
@@ -28,9 +21,35 @@ ParkingLot.init({
         type: DataTypes.FLOAT,  
         allowNull: false,  
     },  
+    motorcycle_tariff: {  
+        type: DataTypes.FLOAT,  // Assuming tariff could be a decimal value  
+        allowNull: false,  
+    },  
+    car_tariff: {  
+        type: DataTypes.FLOAT,  // Assuming tariff could be a decimal value  
+        allowNull: false,  
+    },  
+    motorcycleCapacity: {  
+        type: DataTypes.INTEGER,  
+        allowNull: false,  
+    },  
+    carCapacity: {  
+        type: DataTypes.INTEGER,  
+        allowNull: false,  
+    },  
+    motorcycleAvailableSpot: {  
+        type: DataTypes.INTEGER,  
+        allowNull: false,  
+    },  
+    carAvailableSpot: {  
+        type: DataTypes.INTEGER,  
+        allowNull: false,  
+    },  
 }, {  
     sequelize,  
-    modelName: 'parking_lots',  
+    modelName: 'ParkingLot', // Prefer camel case for modelName  
+    tableName: 'parking_lots', // Explicitly name the database table  
+    timestamps: true, // Automatically add createdAt and updatedAt fields  
 });  
 
 module.exports = ParkingLot;

@@ -172,158 +172,161 @@ footer {
   </head>  
   <body>  
     <nav>  
-      <a href="/">Home</a>  
-      <a href="/profile">Profile</a>  
-      <a href="/about">About</a>  
+        <a href="/">Home</a>  
+        <a href="/profile">Profile</a>  
+        <a href="/ticket">ticket</a>  
     </nav>  
 
     <div class="container">  
-      <h1>Parking Dashboard</h1>  
-      <h1 class="typing" id="typing-text"></h2>   
-        <form id="locationForm">    
-            <div class="input-group"> <!-- Flex container for input and button -->  
+        <h1>Parking Dashboard</h1>  
+        <h1 class="typing" id="typing-text"></h1>  <!-- Fixed unclosed tag -->  
+        <form id="locationForm">  
+            <div class="input-group">  
                 <input type="text" id="location" required placeholder="e.g., Cibaduyut, Bandung" />   
                 <button type="submit">Find</button>  
             </div>  
-        </form>
-      <div id="map"></div>  
+        </form>  
 
-      <ul>  
-        <% parkingLots.forEach(lot => { %>  
-        <li>  
-          <strong><%= lot.name %></strong> - <%= lot.availableSpots %> spots available  
-          <form action="/book" method="POST">  
-            <input type="hidden" name="parkingLotId" value="<%= lot.id %>" />  
-            <input type="hidden" name="vehicleId" value="1" />  
-            <input type="hidden" name="userId" value="<%= userId %>" />  
+        <div id="map"></div>  
 
-            <label for="startTime">Start Time:</label>  
-            <input  
-              type="datetime-local"  
-              id="startTime"  
-              name="startTime"  
-              required  
-            />  
-
-            <label for="endTime">End Time:</label>  
-            <input type="datetime-local" id="endTime" name="endTime" required />  
-
-            <button type="submit">Book</button>  
-          </form>  
-        </li>  
-        <% }); %>  
-      </ul>  
+        <ul>  
+            <% parkingLots.forEach(lot => { %>  
+                <li>  
+                    <strong><%= lot.name %></strong> -   
+                    <span><%= lot.motorcycleAvailableSpot %> motorcycle spots available</span> |   
+                    <span><%= lot.carAvailableSpot %> car spots available</span>  
+                    <form action="/book" method="POST">  
+                        <input type="hidden" name="parkingLotId" value="<%= lot.id %>" />  
+                        <input type="hidden" name="userId" value="<%= userId %>" />  
+        
+                        <label for="vehicleType">Vehicle Type:</label>  
+                        <select name="vehicleType" id="vehicleType" required>  
+                            <option value="motorcycle">Motorcycle</option>  
+                            <option value="car">Car</option>  
+                        </select>  
+        
+                        <label for="startTime">Start Time:</label>  
+                        <input type="datetime-local" id="startTime" name="startTime" required />  
+        
+                        <label for="endTime">End Time:</label>  
+                        <input type="datetime-local" id="endTime" name="endTime" required />  
+        
+                        <button type="submit">Book</button>  
+                    </form>  
+                </li>  
+            <% }); %>  
+        </ul>
     </div>  
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
     <script>  
-      const parkingLots = [  
-          <% parkingLots.forEach(lot => { %>  
-              { id: <%= lot.id %>, name: '<%= lot.name %>', latitude: <%= lot.latitude %>, longitude: <%= lot.longitude %> },  
-          <% }); %>  
-      ];  
+        const parkingLots = [  
+            <% parkingLots.forEach(lot => { %>  
+                { id: <%= lot.id %>, name: '<%= lot.name %>', latitude: <%= lot.latitude %>, longitude: <%= lot.longitude %> },  
+            <% }); %>  
+        ];  
 
-      const map = L.map('map').setView([-6.903889, 107.576389], 12);  
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {  
-          maxZoom: 19,  
-          attribution: '© OpenStreetMap contributors'  
-      }).addTo(map);  
+        const map = L.map('map').setView([-6.903889, 107.576389], 12);  
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {  
+            maxZoom: 19,  
+            attribution: '© OpenStreetMap contributors'  
+        }).addTo(map);  
 
-      parkingLots.forEach(lot => {  
-          L.marker([lot.latitude, lot.longitude])  
-              .addTo(map)  
-              .bindPopup(lot.name);  
-      });  
+        parkingLots.forEach(lot => {  
+            L.marker([lot.latitude, lot.longitude])  
+                .addTo(map)  
+                .bindPopup(lot.name);  
+        });  
 
-      document.getElementById('locationForm').addEventListener('submit', function(e) {  
-          e.preventDefault();  
-          const location = document.getElementById('location').value;  
-          findNearestParking(location);  
-      });  
+        document.getElementById('locationForm').addEventListener('submit', function(e) {  
+            e.preventDefault();  
+            const location = document.getElementById('location').value;  
+            findNearestParking(location);  
+        });  
 
-      async function findNearestParking(location) {  
-          const apiKey = '00e706971665492fb55b82a71c48c6e7';  
-          const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`;  
+        async function findNearestParking(location) {  
+            const apiKey = '00e706971665492fb55b82a71c48c6e7';  
+            const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`;  
 
-          try {  
-              const response = await fetch(geocodeUrl);  
-              const data = await response.json();  
+            try {  
+                const response = await fetch(geocodeUrl);  
+                const data = await response.json();  
 
-              if (data.results.length > 0) {  
-                  const userLocation = data.results[0].geometry;  
-                  const userLat = userLocation.lat;  
-                  const userLng = userLocation.lng;  
+                if (data.results.length > 0) {  
+                    const userLocation = data.results[0].geometry;  
+                    const userLat = userLocation.lat;  
+                    const userLng = userLocation.lng;  
 
-                  const nearestLot = findNearestParkingLot(userLat, userLng);  
-                  if (nearestLot) {  
-                      alert(`The nearest parking lot is ${nearestLot.name}`);  
-                      map.setView([nearestLot.latitude, nearestLot.longitude], 15);  
-                      L.marker([nearestLot.latitude, nearestLot.longitude]).addTo(map).bindPopup('Nearest Lot: ' + nearestLot.name).openPopup();  
-                  } else {  
-                      alert('No parking lots found nearby.');  
-                  }  
-              } else {  
-                  alert('Location not found. Please try again.');  
-              }  
-          } catch (error) {  
-              console.error('Error fetching the location:', error);  
-              alert('An error occurred while finding your location.');  
-          }  
-      }  
+                    const nearestLot = findNearestParkingLot(userLat, userLng);  
+                    if (nearestLot) {  
+                        alert(`The nearest parking lot is ${nearestLot.name}`);  
+                        map.setView([nearestLot.latitude, nearestLot.longitude], 15);  
+                        L.marker([nearestLot.latitude, nearestLot.longitude]).addTo(map).bindPopup('Nearest Lot: ' + nearestLot.name).openPopup();  
+                    } else {  
+                        alert('No parking lots found nearby.');  
+                    }  
+                } else {  
+                    alert('Location not found. Please try again.');  
+                }  
+            } catch (error) {  
+                console.error('Error fetching the location:', error);  
+                alert('An error occurred while finding your location.');  
+            }  
+        }  
 
-      function findNearestParkingLot(userLat, userLng) {  
-          let nearestLot = null;  
-          let minDistance = Infinity;  
+        function findNearestParkingLot(userLat, userLng) {  
+            let nearestLot = null;  
+            let minDistance = Infinity;  
 
-          parkingLots.forEach(lot => {  
-              const distance = getDistanceBetweenPoints(userLat, userLng, lot.latitude, lot.longitude);  
-              if (distance < minDistance) {  
-                  minDistance = distance;  
-                  nearestLot = lot;  
-              }  
-          });  
+            parkingLots.forEach(lot => {  
+                const distance = getDistanceBetweenPoints(userLat, userLng, lot.latitude, lot.longitude);  
+                if (distance < minDistance) {  
+                    minDistance = distance;  
+                    nearestLot = lot;  
+                }  
+            });  
 
-          return nearestLot;  
-      }  
+            return nearestLot;  
+        }  
 
-      function getDistanceBetweenPoints(lat1, lon1, lat2, lon2) {  
-          const R = 6371; // Earth radius in kilometers  
-          const dLat = degreesToRadians(lat2 - lat1);  
-          const dLon = degreesToRadians(lon2 - lon1);  
-          const a = Math.sin(dLat/2) * Math.sin(dLat/2) +  
-                    Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *  
-                    Math.sin(dLon/2) * Math.sin(dLon/2);  
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));  
-          return R * c; // Distance in kilometers  
-      }  
+        function getDistanceBetweenPoints(lat1, lon1, lat2, lon2) {  
+            const R = 6371; // Earth radius in kilometers  
+            const dLat = degreesToRadians(lat2 - lat1);  
+            const dLon = degreesToRadians(lon2 - lon1);  
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +  
+                      Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *  
+                      Math.sin(dLon/2) * Math.sin(dLon/2);  
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));  
+            return R * c; // Distance in kilometers  
+        }  
 
-      function degreesToRadians(degrees) {  
-          return degrees * (Math.PI / 180);  
-      }  
-      
-      // Typing effect script  
-      const typingTextElement = document.getElementById('typing-text');  
-      const typingText = "Hello, where are you going?";  
-      let i = 0;  
+        function degreesToRadians(degrees) {  
+            return degrees * (Math.PI / 180);  
+        }  
 
-      function type() {  
-          if (i < typingText.length) {  
-              typingTextElement.innerHTML += typingText.charAt(i);  
-              i++;  
-              setTimeout(type, 150); // Adjust typing speed here  
-          } else {  
-              setTimeout(() => {  
-                  typingTextElement.innerHTML = '';  
-                  i = 0;  
-                  type(); // Restart typing effect  
-              }, 2000); // Delay before restarting the effect  
-          }  
-      }  
+        // Typing effect script  
+        const typingTextElement = document.getElementById('typing-text');  
+        const typingText = "Hello, where are you going?";  
+        let i = 0;  
 
-      type(); // Start typing effect  
+        function type() {  
+            if (i < typingText.length) {  
+                typingTextElement.innerHTML += typingText.charAt(i);  
+                i++;  
+                setTimeout(type, 150); // Adjust typing speed here  
+            } else {  
+                setTimeout(() => {  
+                    typingTextElement.innerHTML = '';  
+                    i = 0;  
+                    type(); // Restart typing effect  
+                }, 2000); // Delay before restarting the effect  
+            }  
+        }  
+
+        type(); // Start typing effect  
     </script>  
-  </body>  
-</html>
+</body>  
+</html>  
 
 <%- include('layouts/footer') %>  
