@@ -26,8 +26,8 @@
         <p><strong>User:</strong> <span id="userName"><%= ticket.userName %></span></p>  
         <p><strong>Parking Lot:</strong> <span id="parkingLot"><%= ticket.parkingLot %></span></p>  
         <p><strong>Date:</strong> <span id="bookingDate"><%= new Date(ticket.bookingDate).toLocaleDateString() %></span></p>  
-        <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span></p>  
-        <p><strong>Total Cost:</strong> <span id="totalCost"><%= ticket.totalCost %></span></p>  
+        <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
+        <p><strong>Total Cost:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p> <!-- Ensures currency format -->  
 
         <svg id="barcode"></svg> <!-- SVG for Barcode -->  
 
@@ -36,14 +36,12 @@
 
     <!-- Include JsBarcode Library -->  
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>  
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>  
     <script>  
         document.addEventListener("DOMContentLoaded", function() {  
             // Gather data for barcode  
             const bookingID = document.getElementById("bookingId").innerText;  
             const userName = document.getElementById("userName").innerText;  
             const parkingLot = document.getElementById("parkingLot").innerText;  
-
 
             // Concatenate values into a single string  
             const barcodeData = `${bookingID}|${userName}|${parkingLot}`;  

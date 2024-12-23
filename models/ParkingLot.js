@@ -1,7 +1,16 @@
 const { Model, DataTypes } = require('sequelize');  
 const sequelize = require('../config/database');  
 
-class ParkingLot extends Model {}  
+class ParkingLot extends Model {  
+    static associate(models) {  
+        // A ParkingLot can have many bookings  
+        ParkingLot.hasMany(models.Booking, {  
+            foreignKey: 'parkingLotId', // this should match the Booking model's foreign key field  
+            as: 'bookings'  
+        });  
+    }  
+}  
+
 
 // Initialize the ParkingLot model with the updated attributes  
 ParkingLot.init({  

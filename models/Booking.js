@@ -1,8 +1,12 @@
 const { Model, DataTypes } = require('sequelize');  
 const sequelize = require('../config/database');  
 
-class Booking extends Model {}  
-
+class Booking extends Model {  
+    static associate(models) {  
+        Booking.belongsTo(models.User, { foreignKey: 'userId' }); // Defines the many-to-one relationship  
+        Booking.belongsTo(models.ParkingLot, { foreignKey: 'parkingLotId' }); // Assume ParkingLot table exists  
+    }  
+}  
 Booking.init({  
     parkingLotId: {  
         type: DataTypes.INTEGER,  
@@ -15,6 +19,7 @@ Booking.init({
     userId: {  
         type: DataTypes.INTEGER,  
         allowNull: false,  
+        field: 'userId',
     },  
     startTime: {  
         type: DataTypes.DATE,  
@@ -30,7 +35,7 @@ Booking.init({
     },  
     duration: {  // New field for duration  
         type: DataTypes.FLOAT,  
-        allowNull: false  
+        allowNull: true
     }  
 }, {  
     sequelize,  

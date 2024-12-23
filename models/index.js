@@ -1,5 +1,3 @@
-'use strict';
-
 'use strict';  
 
 // models/index.js  

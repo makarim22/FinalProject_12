@@ -1,7 +1,7 @@
 // // controllers/ticketController.js  
 // const QRCode = require('qrcode'); // For generating QR codes  
 const Booking = require('../models/Booking'); // Adjust this to your Booking model path  
-
+const User = require('../models/User');
 exports.generateTicket = async ({ params: { id: bookingId } }, res) => {  
     try {  
         const booking = await Booking.findOne({ where: { id: bookingId } });  

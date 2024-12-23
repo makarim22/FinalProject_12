@@ -14,14 +14,48 @@
 
         .card {  
             margin-bottom: 20px; /* Space between cards */  
+            border-radius: 15px; /* Rounded corners */  
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */  
+        }  
+
+        .profile-header {  
+            background-color: #007bff; /* Branding color */  
+            color: white;  
+            border-radius: 15px 15px 0 0; /* Rounded top corners */  
+            padding: 20px;  
+            text-align: center;  
+        }  
+
+        .profile-header h1 {  
+            margin: 0;  
+        }  
+
+        .logout-btn {  
+            background-color: #dc3545; /* Bootstrap danger color */  
+            border: none;  
+            border-radius: 5px;  
+            padding: 10px 20px;  
+            font-size: 16px;  
+            transition: background-color 0.3s;  
+        }  
+
+        .logout-btn:hover {  
+            background-color: #c82333; /* Darker red on hover */  
+        }  
+
+        .booking-list {  
+            margin: 10px 0;  
         }  
     </style>  
 </head>  
 
 <body>  
     <div class="container my-5">  
-        <h1 class="text-center mb-4">User Profile</h1>  
-        
+        <div class="profile-header">  
+            <h1>User Profile</h1>  
+            <p>Welcome back, <%= user.username %>!</p>  
+        </div>  
+
         <!-- Profile Information Card -->  
         <div class="card">  
             <div class="card-body">  
@@ -32,10 +66,38 @@
             </div>  
         </div>  
 
-        
+        <!-- Recent Bookings Card -->  
+        <div class="card">  
+            <div class="card-body">  
+                <h5 class="card-title">Recent Bookings</h5>  
+                <div class="booking-list">  
+                    <% if (recentBookings.length) { %>  
+                        <ul class="list-group">  
+                            <% recentBookings.forEach(booking => { %>  
+                                <li class="list-group-item">  
+                                    <strong>Parking Lot ID:</strong> <%= booking.parkingLotId %><br>   
+                                    <strong>Duration:</strong> <%= booking.duration %> hours<br>  
+                                    <strong>Amount Paid:</strong> $<%= booking.totalCost.toFixed(2) %>  
+                                </li>  
+                            <% }) %>  
+                        </ul>  
+                        <div class="total-info">  
+                            <strong>Total Amount Paid:</strong> $<%= totalAmountPaid.toFixed(2) %><br>  
+                            <strong>Total Duration:</strong> <%= totalDuration %> hours  
+                        </div>  
+                    <% } else { %>  
+                        <p>No recent bookings found.</p>  
+                    <% } %>  
+                </div>
+            </div>  
+        </div>  
+
         <div class="text-center">  
             <form action="/logout" method="POST" style="display:inline;">  
-                <button type="submit" class="btn btn-danger">Logout</button>  
+                <button type="submit" class="btn logout-btn">Logout</button>  
+            </form>  
+            <form action="/dashboard" method="GET" style="display:inline;">  
+                <button type="submit" class="btn dashboard-btn">Dashboard</button>  
             </form>  
         </div>
 

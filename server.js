@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');  
 const session = require('express-session');  
 const sequelize = require('./config/database');  
+const cron = require('node-cron');  
 
+const { resetExpiredParkingSpots } = require('./resetparking');  
 /// define routes
 const authRoutes = require('./routes/authRoutes');  
 const parkingRoutes = require('./routes/parkingRoutes');  
@@ -46,6 +48,7 @@ app.use('/', bookingRoutes);
 app.use('/', profileRoutes);
 app.use('/', ticketRoutes);  // Add the profile routes here 
 
+// sequelize.sync({ alter: true }); // This will adjust the models to match the database schema
 
 // Start the server  
 app.listen(PORT, async () => {  

@@ -2,7 +2,11 @@
 const { Model, DataTypes } = require("sequelize");  
 const sequelize = require("../config/database");  
 
-class User extends Model {}  
+class User extends Model {  
+  static associate(models) {  
+      User.hasMany(models.Booking, { foreignKey: 'userId' }); // Defines the one-to-many relationship  
+  }  
+}  
 
 // Initialize the User model  
 User.init(  
@@ -36,3 +40,4 @@ User.init(
 );  
 
 module.exports = User;
+
