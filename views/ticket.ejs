@@ -27,7 +27,7 @@
         <p><strong>Parking Lot:</strong> <span id="parkingLot"><%= ticket.parkingLot %></span></p>  
         <p><strong>Date:</strong> <span id="bookingDate"><%= new Date(ticket.bookingDate).toLocaleDateString() %></span></p>  
         <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
-        <p><strong>Total Cost:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p> <!-- Ensures currency format -->  
+        <p><strong>Total Cost:</strong> <span id="totalCost">Rp <%= ticket.totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.') %></span></p> <!-- Updated for Rupiah --> 
 
         <svg id="barcode"></svg> <!-- SVG for Barcode -->  
 

@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
         req.session.userId = user.id; // Store the token in the session if using session storage  
         return res.redirect('/dashboard');  
     } else {  
-        res.render('login', { error: 'Invalid credentials' });  
+        res.render('login',{ error: 'Invalid credentials' });  
     }  
 }; 
 // Logout function  

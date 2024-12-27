@@ -39,3 +39,5 @@ async function resetExpiredParkingSpots() {
         console.error('Error resetting expired parking spots:', error);  
     }  
 }
+
+module.exports = resetExpiredParkingSpots;

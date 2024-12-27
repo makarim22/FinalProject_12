@@ -50,6 +50,15 @@ app.use('/', ticketRoutes);  // Add the profile routes here
 
 // sequelize.sync({ alter: true }); // This will adjust the models to match the database schema
 
+//
+
+// Schedule the task to run every hour  
+cron.schedule('* * * * *', async () => {  
+    console.log("Checking for expired parking spots...");  
+    await resetExpiredParkingSpots();  
+});
+//
+
 // Start the server  
 app.listen(PORT, async () => {  
     try {  

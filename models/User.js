@@ -25,11 +25,11 @@ User.init(
       allowNull: false,  
       unique: true,  
     },  
-    coins: {  
+    balance: {  // Changed from coins to balance  
       type: DataTypes.INTEGER,  
-      defaultValue: 100, // Optional: set a default value  
+      defaultValue: 100000, // Set the initial balance to 100,000  
       allowNull: true, // Set this to true if you want it optional  
-    },  
+  },  
   },  
   {  
     sequelize, // Pass the sequelize instance  

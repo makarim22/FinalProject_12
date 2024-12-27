@@ -13,7 +13,7 @@ exports.getProfile = async (req, res) => {
   try {
     // Fetch the logged-in user's information
     const user = await User.findByPk(req.session.userId, {
-      attributes: ["id", "username", "email", "coins"], // Include 'id' to access it later
+      attributes: ["id", "username", "email", "balance"], // Include 'id' to access it later
     });
 
     // If the user is not found, redirect to login
